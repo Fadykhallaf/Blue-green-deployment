@@ -15,7 +15,7 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file template.yml \
-              --stack-name infra_stack \
+              --stack-name infra-stack \
 
 
 workflows:
