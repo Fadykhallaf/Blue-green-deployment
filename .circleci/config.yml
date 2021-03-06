@@ -1,0 +1,20 @@
+version: 2.1
+
+# Using Anchors to reuse the code and follow DRY principle
+defaults: &defaults
+  docker:
+    - image: amazon/aws-cli
+
+jobs:
+  create_infrastructure:
+    <<: *defaults
+
+    steps:
+      - checkout
+      - run: 
+          command: aws cloudformation create-stack infrastructure --template-body template.yml --region=$AWS_DEFAULT_REGION
+
+workflows:
+  infrastructure-deployment:
+    jobs:
+      - create_infrastructure
