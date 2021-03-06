@@ -14,7 +14,7 @@ jobs:
       - run: 
           command: |
             aws cloudformation create-stack --stack-name infrastructure \
-              --template-body template.yml \
+              --template-body file://template.yml \
               --region=$AWS_DEFAULT_REGION
 
 workflows:
