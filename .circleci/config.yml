@@ -6,19 +6,41 @@ defaults: &defaults
     - image: amazon/aws-cli
 
 jobs:
-  create_infrastructure:
-    <<: *defaults
+  # Deploy a cloudformation stack using Circleci
+  # create_infrastructure:
+    # <<: *defaults
 
+    # steps:
+    #   - checkout 
+    #   - run: 
+    #       command: |
+    #         aws cloudformation deploy \
+    #           --template-file template.yml \
+    #           --stack-name infra-stack \
+  
+  # Configure the infrastructure using ansible
+  configure_infrastructure:
+    docker:
+      - image: python:3.7-alpine3.11
+    
     steps:
-      - checkout 
-      - run: 
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "96:a2:80:74:48:cd:53:4c:66:4f:23:87:b3:5a:95:9b"
+      - run:
+          name: Install-dependencies
           command: |
-            aws cloudformation deploy \
-              --template-file template.yml \
-              --stack-name infra-stack \
+            apk add --update ansible
+      
+      - run:
+          name: Configure server
+          command: |
+            ansible-playbook -i inventory.txt playbook.yml
 
 
 workflows:
   infrastructure-deployment:
     jobs:
-      - create_infrastructure
+      # - create_infrastructure
+      - configure_infrastructure
