@@ -6,8 +6,7 @@ Resources:
         - !Ref InstanceSecurityGroup
       KeyName: p2-test
       ImageId: ami-0c3dda3deab25a563
-      InstanceType: t2.micro
-
+      
   InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
