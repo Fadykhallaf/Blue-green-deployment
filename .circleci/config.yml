@@ -13,9 +13,10 @@ jobs:
       - checkout 
       - run: 
           command: |
-            aws cloudformation create-stack --stack-name infrastructure \
-              --template-body file://template.yml \
-              --region=$AWS_DEFAULT_REGION
+            aws cloudformation deploy \
+              --template-file template.yml \
+              --stack-name infrastructure \
+
 
 workflows:
   infrastructure-deployment:
