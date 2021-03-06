@@ -10,9 +10,12 @@ jobs:
     <<: *defaults
 
     steps:
-      - checkout
+      - checkout 
       - run: 
-          command: aws cloudformation create-stack infrastructure --template-body template.yml --region=$AWS_DEFAULT_REGION
+          command: |
+            aws cloudformation create-stack --stack-name infrastructure \
+              --template-body template.yml \
+              --region=$AWS_DEFAULT_REGION
 
 workflows:
   infrastructure-deployment:
